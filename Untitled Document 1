@@ -1,0 +1,5 @@
+You may wonder why launcher icon assets are located in mipmap directories, separate from other app assets located in drawable directories. This is because some launchers may display your app icon at a larger size than what's provided by the device's default density bucket. 
+
+To avoid a blurry app icon, be sure to provide different bitmap images of the icon for each density bucket (mdpi, hdpi, xhdpi, etc.). Note that device screen densities won't be precisely 160 dpi, 240 dpi, 320 dpi, etc. Based on the device's screen density, Android selects the resource at the closest larger density bucket and then scales it down.
+
+A vector drawable is Android's implementation of vector graphics, intended to be flexible on mobile devices. You can define them in XML with these possible elements. Instead of providing versions of a bitmap asset for all density buckets, you only need to define the image once. Thus, reducing the size of your app and making it easier to maintain. Yet the tradeoff is that in mipmap u can use complex pics but in vectors u can only use simple ones possible with normal lines and shapes.
