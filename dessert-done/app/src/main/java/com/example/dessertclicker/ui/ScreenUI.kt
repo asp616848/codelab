@@ -39,175 +39,177 @@ import com.example.dessertclicker.shareSoldDessertsInformation
 import com.example.dessertclicker.ui.theme.DessertClickerTheme
 
 
-@Composable
-private fun DessertClickerApp(
-    viewModel: DessertViewModel = viewModel()
-) {
-    val uiState by viewModel.dessertUiState.collectAsState()
-    DessertClickerApp(
-        uiState = uiState,
-        onDessertClicked = viewModel::onDessertClicked
-    )
-}
-
-@Composable
-private fun DessertClickerApp(
-    uiState: DessertUiState,
-    onDessertClicked: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Scaffold(
-        topBar = {
-            val intentContext = LocalContext.current
-            AppBar(
-                onShareButtonClicked = {
-                    shareSoldDessertsInformation(
-                        intentContext = intentContext,
-                        dessertsSold = uiState.dessertsSold,
-                        revenue = uiState.revenue
-                    )
-                }
-            )
-        }
-    ) { contentPadding ->
-        DessertClickerScreen(
-            revenue = uiState.revenue,
-            dessertsSold = uiState.dessertsSold,
-            dessertImageId = uiState.currentDessertImageId,
-            onDessertClicked = onDessertClicked,
-            modifier = Modifier.padding(contentPadding)
-        )
-    }
-}
-
-@Composable
-private fun AppBar(
-    onShareButtonClicked: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colors.primary),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
+class Screen {
+    @Composable
+    fun ScreenUI(
+        viewModel: DessertViewModel = viewModel()
     ) {
-        Text(
-            text = stringResource(R.string.app_name),
-            modifier = Modifier.padding(start = 16.dp),
-            color = MaterialTheme.colors.onPrimary,
-            style = MaterialTheme.typography.h6,
+        val uiState by viewModel.dessertUiState.collectAsState()
+        ScreenUI(
+            uiState = uiState,
+            onDessertClicked = viewModel::onDessertClicked
         )
-        IconButton(
-            onClick = onShareButtonClicked,
-            modifier = Modifier.padding(end = 16.dp),
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Share,
-                contentDescription = stringResource(R.string.share),
-                tint = MaterialTheme.colors.onPrimary
-            )
-        }
     }
-}
 
-@Composable
-fun DessertClickerScreen(
-    revenue: Int,
-    dessertsSold: Int,
-    @DrawableRes dessertImageId: Int,
-    onDessertClicked: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box(modifier = modifier) {
-        Image(
-            painter = painterResource(R.drawable.bakery_back),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        Column {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-            ) {
-                Image(
-                    painter = painterResource(dessertImageId),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(150.dp)
-                        .align(Alignment.Center)
-                        .clickable { onDessertClicked() },
-                    contentScale = ContentScale.Crop,
+    @Composable
+    private fun ScreenUI(
+        uiState: DessertUiState,
+        onDessertClicked: () -> Unit,
+        modifier: Modifier = Modifier
+    ) {
+        Scaffold(
+            topBar = {
+                val intentContext = LocalContext.current
+                AppBar(
+                    onShareButtonClicked = {
+                        shareSoldDessertsInformation(
+                            intentContext = intentContext,
+                            dessertsSold = uiState.dessertsSold,
+                            revenue = uiState.revenue
+                        )
+                    }
                 )
             }
-            TransactionInfo(revenue = revenue, dessertsSold = dessertsSold)
+        ) { contentPadding ->
+            DessertClickerScreen(
+                revenue = uiState.revenue,
+                dessertsSold = uiState.dessertsSold,
+                dessertImageId = uiState.currentDessertImageId,
+                onDessertClicked = onDessertClicked,
+                modifier = Modifier.padding(contentPadding)
+            )
         }
     }
-}
 
-@Composable
-private fun TransactionInfo(
-    revenue: Int,
-    dessertsSold: Int,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .background(Color.White),
+    @Composable
+    private fun AppBar(
+        onShareButtonClicked: () -> Unit,
+        modifier: Modifier = Modifier
     ) {
-        DessertsSoldInfo(dessertsSold)
-        RevenueInfo(revenue)
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.primary),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.app_name),
+                modifier = Modifier.padding(start = 16.dp),
+                color = MaterialTheme.colors.onPrimary,
+                style = MaterialTheme.typography.h6,
+            )
+            IconButton(
+                onClick = onShareButtonClicked,
+                modifier = Modifier.padding(end = 16.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Share,
+                    contentDescription = stringResource(R.string.share),
+                    tint = MaterialTheme.colors.onPrimary
+                )
+            }
+        }
     }
-}
 
-@Composable
-private fun RevenueInfo(revenue: Int, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+    @Composable
+    fun DessertClickerScreen(
+        revenue: Int,
+        dessertsSold: Int,
+        @DrawableRes dessertImageId: Int,
+        onDessertClicked: () -> Unit,
+        modifier: Modifier = Modifier
     ) {
-        Text(
-            text = stringResource(R.string.total_revenue),
-            style = MaterialTheme.typography.h4
-        )
-        Text(
-            text = "$${revenue}",
-            textAlign = TextAlign.Right,
-            style = MaterialTheme.typography.h4
-        )
+        Box(modifier = modifier) {
+            Image(
+                painter = painterResource(R.drawable.bakery_back),
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+            Column {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                ) {
+                    Image(
+                        painter = painterResource(dessertImageId),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(150.dp)
+                            .align(Alignment.Center)
+                            .clickable { onDessertClicked() },
+                        contentScale = ContentScale.Crop,
+                    )
+                }
+                TransactionInfo(revenue = revenue, dessertsSold = dessertsSold)
+            }
+        }
     }
-}
 
-@Composable
-private fun DessertsSoldInfo(dessertsSold: Int, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+    @Composable
+    private fun TransactionInfo(
+        revenue: Int,
+        dessertsSold: Int,
+        modifier: Modifier = Modifier
     ) {
-        Text(
-            text = stringResource(R.string.dessert_sold),
-            style = MaterialTheme.typography.h6
-        )
-        Text(
-            text = dessertsSold.toString(),
-            style = MaterialTheme.typography.h6
-        )
+        Column(
+            modifier = modifier
+                .background(Color.White),
+        ) {
+            DessertsSoldInfo(dessertsSold)
+            RevenueInfo(revenue)
+        }
     }
-}
 
-@Preview
-@Composable
-fun MyDessertClickerAppPreview() {
-    DessertClickerTheme {
-        DessertClickerApp(
-            uiState = DessertUiState(),
-            onDessertClicked = {}
-        )
+    @Composable
+    private fun RevenueInfo(revenue: Int, modifier: Modifier = Modifier) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                text = stringResource(R.string.total_revenue),
+                style = MaterialTheme.typography.h4
+            )
+            Text(
+                text = "$${revenue}",
+                textAlign = TextAlign.Right,
+                style = MaterialTheme.typography.h4
+            )
+        }
+    }
+
+    @Composable
+    private fun DessertsSoldInfo(dessertsSold: Int, modifier: Modifier = Modifier) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                text = stringResource(R.string.dessert_sold),
+                style = MaterialTheme.typography.h6
+            )
+            Text(
+                text = dessertsSold.toString(),
+                style = MaterialTheme.typography.h6
+            )
+        }
+    }
+
+    @Preview
+    @Composable
+    fun MyDessertClickerAppPreview() {
+        DessertClickerTheme {
+            ScreenUI(
+                uiState = DessertUiState(),
+                onDessertClicked = {}
+            )
+        }
     }
 }
