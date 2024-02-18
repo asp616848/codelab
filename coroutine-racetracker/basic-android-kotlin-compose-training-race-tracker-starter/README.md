@@ -18,3 +18,7 @@ Getting Started
 2. Download the sample.
 3. Import the sample into Android Studio.
 4. Build and run the sample.
+
+## NOTE
+
+=> Similar to how a Text() composable gets recomposed when its text value changes, if any of the key arguments of the LaunchedEffect() changes, the underlying coroutine is canceled and relaunched.

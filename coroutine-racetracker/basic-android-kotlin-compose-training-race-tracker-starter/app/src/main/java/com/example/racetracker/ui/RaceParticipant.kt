@@ -15,9 +15,12 @@
  */
 package com.example.racetracker.ui
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * This class represents a state holder for race participant.
@@ -33,17 +36,30 @@ class RaceParticipant(
         require(maxProgress > 0) { "maxProgress=$maxProgress; must be > 0" }
         require(progressIncrement > 0) { "progressIncrement=$progressIncrement; must be > 0" }
     }
-
+    
     /**
      * Indicates the race participant's current progress
      */
     var currentProgress by mutableStateOf(initialProgress)
         private set
 
+    suspend fun run(){
+        try{
+            while (currentProgress < maxProgress) {
+                delay(progressDelayMillis)  //this pauses the coroutine for the delay instead of stopping.
+                currentProgress += progressIncrement
+            }
+        }
+        catch (e: CancellationException){
+            Log.e("RaceParticipant","$name : ${e.message}")
+            throw e
+        }
+    }
     /**
      * Regardless of the value of [initialProgress] the reset function will reset the
      * [currentProgress] to 0
      */
+    
     fun reset() {
         currentProgress = 0
     }
