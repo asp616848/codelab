@@ -17,6 +17,7 @@ package com.example.marsphotos.ui.screens
 
 
 
+import MarsPhoto
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 sealed interface MarsUiState{
-    data class Success(val photos : String) : MarsUiState
+    data class Success(val photos : List<MarsPhoto>) : MarsUiState
     object Error : MarsUiState
     object Loading : MarsUiState
 }
@@ -50,8 +51,8 @@ class MarsViewModel : ViewModel() {
     fun getMarsPhotos() {
         viewModelScope.launch {
             marsUiState = try{
-                val listResult = MarsApi.retrofitService.getPhotos()
-                MarsUiState.Success("Success: ${listResult.size} Mars photos retrieved")
+                val result = MarsApi.retrofitService.getPhotos()
+                MarsUiState.Success(result)
             }catch(e:IOException){
                 MarsUiState.Error
             }
