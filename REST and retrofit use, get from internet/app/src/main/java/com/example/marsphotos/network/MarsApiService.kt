@@ -20,9 +20,9 @@ interface MarsApiService {
     suspend fun getPhotos(): List<MarsPhoto>
 }
 
-object MarsApi{ //provides a convenient way of access
-    val retrofitService : MarsApiService by lazy{
-        retrofit.create(MarsApiService::class.java)
-    }
-}
+//object MarsApi{ //provides a convenient way of access
+//    val retrofitService : MarsApiService by lazy{
+//        retrofit.create(MarsApiService::class.java)
+//    }
+//}
 
