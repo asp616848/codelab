@@ -18,6 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name=".MarsPhotosApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,8 +28,8 @@
         tools:targetApi="33">
 
         <activity
-            android:name=".MarsPhotosApplication"
-            android:allowBackup="true"
+
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MarsPhotos">
