@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base", "group:all", ":dependencyDashboard", "schedule:daily"
+  ],
+  "baseBranches": [
+    "main", "end"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Kotlin Dependencies",
+      "matchPackagePrefixes": [
+        "org.jetbrains.kotlin",
+        "androidx.compose.compiler"
+      ]
+    }
+  ]
+}
