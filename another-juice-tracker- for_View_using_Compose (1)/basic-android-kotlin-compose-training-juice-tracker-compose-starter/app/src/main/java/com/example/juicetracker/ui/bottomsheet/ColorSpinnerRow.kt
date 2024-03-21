@@ -30,7 +30,7 @@ fun ColorSpinnerRow(
     modifier: Modifier = Modifier
 ) {
     val juiceColorArray =
-        JuiceColor.values().map { juiceColor -> stringResource(juiceColor.label) }
+        JuiceColor.entries.map { juiceColor -> stringResource(juiceColor.label) }
     InputRow(inputLabel = stringResource(R.string.color), modifier = modifier) {
         AndroidView(factory = {context -> Spinner(context).apply {
             adapter = ArrayAdapter(
@@ -43,6 +43,7 @@ fun ColorSpinnerRow(
             update = { spinner ->
                 spinner.setSelection(colorSpinnerPosition)
                 spinner.onItemSelectedListener = SpinnerAdapter(onColorChange)
-            })
+            }
+        )
     }
 }

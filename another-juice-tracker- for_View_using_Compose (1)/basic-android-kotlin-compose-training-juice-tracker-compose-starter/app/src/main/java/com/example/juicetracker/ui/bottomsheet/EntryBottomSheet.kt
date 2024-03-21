@@ -116,6 +116,10 @@ fun SheetForm(
                 onUpdateJuice(juice.copy(color = JuiceColor.values()[color].name))
             }
         )
+        RatingInputRow(rating = juice.rating, onRatingChange = {
+            rating->
+            onUpdateJuice(juice.copy(rating = rating))
+        })
         ButtonRow(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             onCancel = onCancel,
